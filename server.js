@@ -8,8 +8,8 @@ const app = express();
 const db = mysql.createConnection(
     {
         host: 'localhost',
-        user: 'root',
-        password: 'password',
+        user: process.env.userID,
+        password: process.env.password,
         database: 'employees_db'
     },
     console.log('Connected to the employees_db database.')
