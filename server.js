@@ -1,5 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2');
+const { start }  = require('./prompts');
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -14,6 +16,14 @@ const db = mysql.createConnection(
     },
     console.log('Connected to the employees_db database.')
 );
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+
+// Express middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.post('/api/department', ({ body }, res) => {
     const sql = `INSERT INTO department (name)
@@ -30,4 +40,10 @@ app.post('/api/department', ({ body }, res) => {
             data: body
         });
     });
+});
+
+
+
+start(db).then((answers) => {
+    console.log(answers);
 });
